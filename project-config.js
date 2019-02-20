@@ -42,7 +42,7 @@ const OUTPUT_ASSETS_FOLDER = 'assets'; // Public Folder
  *    /site-name  => If site is hosted on Shared Machine
  *    /           => If site is hosted on Dedicated Machine
  */
-const APP_PUBLIC_PATH = 'xyz-webiste';
+const APP_PUBLIC_PATH = 'xyz-website';
 
 // Webpack-Dev-Server
 const DEV_SERVER_HOST = 'localhost'; // Use 0.0.0.0 if wanted to access it over LAN using Machine IP address

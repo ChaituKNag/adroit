@@ -8,7 +8,7 @@
 'use strict';
 
 const forEach = require('lodash.foreach');
-const filter = require('lodash.filter');
+const filter = require('lodash/filter');
 const isFunction = require('lodash.isfunction');
 const uniqueId = require('lodash.uniqueid');
 

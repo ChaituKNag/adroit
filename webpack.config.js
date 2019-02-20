@@ -3,13 +3,12 @@ const { resolve } = require('path');
 const PROJECT_CONFIG = require('./project-config.js');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
-const extractCSS = new ExtractTextPlugin(`${PROJECT_CONFIG.OUTPUT_CSS_FOLDER}/bundle.[name].css`);
-
 module.exports = (env = {}) => {
 	console.log('>>>> env  : ', env);
 
 	const IS_PRODUCTION_MODE = !env.dev;
 	const IS_ANALYSE_BUILD = env.analyse || false;
+	const IS_BUNDLE_ANALYZER = env.wba || false;
 	const IS_MOCK_SERVER = env.mock || true;
 	const IS_ABSOLUTE_API_PATH = env.absoluteApiPath || false;
 	const { APP_PUBLIC_PATH } = PROJECT_CONFIG;
@@ -17,6 +16,7 @@ module.exports = (env = {}) => {
 	const WEBPACK_UTILS = require('./webpack-settings/webpack-utils')({
 		IS_PRODUCTION_MODE,
 		IS_ANALYSE_BUILD,
+		IS_BUNDLE_ANALYZER,
 		IS_MOCK_SERVER,
 		IS_ABSOLUTE_API_PATH,
 		APP_PUBLIC_PATH
@@ -28,7 +28,6 @@ module.exports = (env = {}) => {
 	// Webpack rules
 	const RULES = require('./webpack-settings/webpack.rules')({
 		IS_PRODUCTION_MODE,
-		extractCSS,
 		APP_PUBLIC_PATH
 	});
 
@@ -36,9 +35,9 @@ module.exports = (env = {}) => {
 	const PLUGINS = require('./webpack-settings/webpack.plugins')({
 		IS_PRODUCTION_MODE,
 		IS_ANALYSE_BUILD,
+		IS_BUNDLE_ANALYZER,
 		IS_ABSOLUTE_API_PATH,
-		APP_PUBLIC_PATH,
-		extractCSS
+		APP_PUBLIC_PATH
 	});
 
 	// Webpack Dev-Server
@@ -68,14 +67,17 @@ module.exports = (env = {}) => {
 				lib: resolve(PROJECT_CONFIG.JS_LIB),
 				handlebars: resolve(PROJECT_CONFIG.HANDLEBARS_DIR),
 				'fe-components': resolve(PROJECT_CONFIG.HBS_FE_COMPONENTS),
-				stylesheets: resolve(PROJECT_CONFIG.STYLESHEETS)
+				stylesheets: resolve(PROJECT_CONFIG.STYLESHEETS),
+				layouts: resolve(PROJECT_CONFIG.HBS_FE_LAYOUTS),
+				pages: resolve(PROJECT_CONFIG.HBS_FE_PAGES)
 			},
 			extensions: ['.js', '.jsx', '.scss']
 		},
 		stats: {
 			children: false
 		},
-		devServer
+		devServer,
+		mode: (IS_PRODUCTION_MODE ? 'production' : 'development')
 	};
 
 	if (env && env.debug) {

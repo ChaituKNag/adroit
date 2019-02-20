@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const filter = require('lodash.filter');
+const filter = require('lodash/filter');
 const forEach = require('lodash.foreach');
 const isFunction = require('lodash.isfunction');
 const isString = require('lodash.isstring');

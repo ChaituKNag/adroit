@@ -24,6 +24,7 @@ module.exports = function webpackUtils(options) {
 		console.log('      IS_ABSOLUTE_API_PATH       :     ', options.IS_ABSOLUTE_API_PATH);
 		console.log('      IS_MOCK_SERVER             :     ', options.IS_MOCK_SERVER);
 		console.log('      ANALYSE BUNDLE             :     ', options.IS_ANALYSE_BUILD);
+		console.log('      BUNDLE ANALYZER            :     ', options.IS_BUNDLE_ANALYZER);
 		console.log('---------------------------------------------------');
 		/* eslint-enable no-console */
 	}

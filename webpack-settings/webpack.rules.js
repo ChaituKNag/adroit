@@ -1,5 +1,7 @@
 const PROJECT_CONFIG = require('../project-config.js');
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 module.exports = function getRules(options) {
 	const rules = [
 		// ES-Lint on continuous build
@@ -31,35 +33,36 @@ module.exports = function getRules(options) {
 		// SCSS-CSS extract to seperate file
 		{
 			test: /\.(css|scss)$/,
-			use: options.extractCSS.extract({
-				fallback: 'style-loader',
-				// resolve-url-loader may be chained before sass-loader if necessary
-				use: [
-					{
-						loader: 'css-loader',
-						options: {
-							// If you are having trouble with urls not resolving add this setting.
-							// See https://github.com/webpack-contrib/css-loader#url
-							// url: false,
-							minimize: false,
-							sourceMap: true
-						}
-					},
-					{
-						loader: 'postcss-loader',
-						options: {
-							sourceMap: true
-						}
-					},
-					{
-						loader: 'sass-loader',
-						options: {
-							sourceMap: true
-						}
+			use: [
+				// 'style-loader',
+				{
+					loader: MiniCssExtractPlugin.loader,
+					options: {
+						publicPath: PROJECT_CONFIG.OUTPUT_CSS_FOLDER
 					}
-				]
-				// publicPath: `/${options.APP_PUBLIC_PATH}/`
-			})
+				},
+				'css-loader',
+				'postcss-loader',
+				'sass-loader'
+				// {
+				// 	loader: 'css-loader',
+				// 	options: {
+				// 		sourceMap: true
+				// 	}
+				// },
+				// {
+				// 	loader: 'postcss-loader',
+				// 	options: {
+				// 		sourceMap: true
+				// 	}
+				// },
+				// {
+				// 	loader: 'sass-loader',
+				// 	options: {
+				// 		sourceMap: true
+				// 	}
+				// }
+			]
 		},
 		// Fonts
 		{

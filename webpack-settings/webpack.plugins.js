@@ -1,7 +1,9 @@
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const Visualizer = require('webpack-visualizer-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const assembleWebpack = require('assemble-webpack');
 
 const PROJECT_CONFIG = require('../project-config.js');
@@ -29,7 +31,11 @@ module.exports = function getPlugins(options) {
 			$: 'jquery',
 			jQuery: 'jquery'
 		}),
-		options.extractCSS,
+		new MiniCssExtractPlugin({
+			// Options similar to the same options in webpackOptions.output
+			// both options are optional
+			filename: `${PROJECT_CONFIG.OUTPUT_CSS_FOLDER}/bundle.[name].css`
+		}),
 		new CopyWebpackPlugin([
 			{
 				from: PROJECT_CONFIG.ASSETS_SRC,
@@ -37,9 +43,9 @@ module.exports = function getPlugins(options) {
 			}
 		]),
 
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor'
-		}),
+		// new webpack.optimize.CommonsChunkPlugin({
+		// 	name: 'vendor'
+		// }),
 		new assembleWebpack.AttachedPlugin({
 			baseLayout: `${HANDLEBARS_DIR}/layouts/base.hbs`,
 			basePages: [`${HANDLEBARS_DIR}/pages/**/*.hbs`],
@@ -56,6 +62,15 @@ module.exports = function getPlugins(options) {
 		plugins.push(
 			new Visualizer({
 				filename: '../build-analysis/statistics.html'
+			})
+		);
+	}
+
+	if (options.IS_BUNDLE_ANALYZER) {
+		console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+		plugins.push(
+			new BundleAnalyzerPlugin({
+				analyzerMode: 'static'
 			})
 		);
 	}

@@ -7,7 +7,7 @@
  */
 'use strict';
 
-const filter = require('lodash.filter');
+const filter = require('lodash/filter');
 const componentList = require('./component-list');
 
 /**

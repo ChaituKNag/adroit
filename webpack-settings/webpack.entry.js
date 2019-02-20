@@ -13,6 +13,6 @@ module.exports = function getEntriesConfig(options) {
 	});
 
 	entries.vendor = ['bootstrap', 'lib/component-register.js'];
-
+	console.dir(entries);
 	return entries;
 };
