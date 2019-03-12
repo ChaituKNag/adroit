@@ -111,7 +111,12 @@ function createBootstrapsampleInstance() {
 	/**
 	 * Logic to run when component is ready
 	 */
-	function init() {}
+	function init() {
+		const text = document.createElement('p');
+		text.innerHTML = 'There you go... added again...';
+
+		document.body.appendChild(text);
+	}
 
 	/**
 	 * Append listeners to the element.
@@ -127,7 +132,7 @@ function createBootstrapsampleInstance() {
 	/**
 	 * Dealloc variables and removes any added listeners.
 	 */
-	function dispose() {}
+	function dispose() { }
 
 	/**
 	 * The DOM Element was added to the DOM.

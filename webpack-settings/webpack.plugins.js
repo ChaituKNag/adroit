@@ -55,7 +55,8 @@ module.exports = function getPlugins(options) {
 				`${HANDLEBARS_DIR}/layouts/**/*.json`,
 				`${HANDLEBARS_DIR}/pages/**/*.json`
 			]
-		})
+		}),
+		new webpack.HotModuleReplacementPlugin()
 	];
 
 	if (options.IS_ANALYSE_BUILD) {
@@ -67,7 +68,6 @@ module.exports = function getPlugins(options) {
 	}
 
 	if (options.IS_BUNDLE_ANALYZER) {
-		console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
 		plugins.push(
 			new BundleAnalyzerPlugin({
 				analyzerMode: 'static'

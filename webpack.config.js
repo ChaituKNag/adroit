@@ -54,8 +54,9 @@ module.exports = (env = {}) => {
 		output: {
 			path: resolve(PROJECT_CONFIG.WEB_ROOT, APP_PUBLIC_PATH),
 			filename: `${PROJECT_CONFIG.OUTPUT_JS_FOLDER}/bundle.[name].js`,
-			publicPath: APP_PUBLIC_PATH,
-			pathinfo: !IS_PRODUCTION_MODE
+			publicPath: `/${APP_PUBLIC_PATH}/`,
+			pathinfo: !IS_PRODUCTION_MODE,
+			hotUpdateMainFilename: '__hmr/[hash].hot-update.json'
 		},
 		devtool: 'source-map',
 		module: {

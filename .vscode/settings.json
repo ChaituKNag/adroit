@@ -3,5 +3,6 @@
 	"[handlebars]": {
 		"editor.formatOnSave": false
 	},
-	"editor.renderWhitespace": "all"
+	"editor.renderWhitespace": "all",
+	"workbench.colorTheme": "Solarized Dark"
 }

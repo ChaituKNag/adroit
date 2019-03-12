@@ -6,8 +6,11 @@ module.exports = function getDevServerConfig(options) {
 	const HOST_NAME = PROJECT_CONFIG.DEV_SERVER_HOST;
 	const PORT = PROJECT_CONFIG.DEV_SERVER_PORT;
 
+	console.log("contentBase", resolve(PROJECT_CONFIG.WEB_ROOT));
+
 	const devServer = {
-		contentBase: resolve(PROJECT_CONFIG.WEB_ROOT),
+		contentBase: resolve(`./${PROJECT_CONFIG.WEB_ROOT}/`),
+		publicPath: resolve(`/${PROJECT_CONFIG.APP_PUBLIC_PATH}/`),
 		host: HOST_NAME,
 		port: PORT,
 		compress: true,
@@ -24,7 +27,8 @@ module.exports = function getDevServerConfig(options) {
 			chunkModules: false,
 			children: false
 		},
-		open: true
+		open: true,
+		hot: true
 		// inline: true,
 		// historyApiFallback: {
 		// 	index: `/${options.APP_PUBLIC_PATH}/`
@@ -48,7 +52,7 @@ module.exports = function getDevServerConfig(options) {
 		// 		}
 		// 	}
 		// };
-		devServer.setup = function handleAPIRequest(app) {
+		devServer.before = function handleAPIRequest(app) {
 			app.all('/api/**', (req, res) => {
 				// console.log('>>> req.url : ', req.url);
 				// console.log('>>> req.baseUrl : ', req.baseUrl);

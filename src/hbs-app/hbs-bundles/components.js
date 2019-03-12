@@ -11,3 +11,8 @@ require('pages/home-page.hbs');
 // HBS - Components
 require('fe-components/sample-component/sample-component');
 require('fe-components/bootstrap-sample/bootstrap-sample');
+
+
+if (module.hot) {
+	module.hot.accept();
+}
